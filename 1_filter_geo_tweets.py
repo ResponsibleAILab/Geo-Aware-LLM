@@ -5,20 +5,20 @@ from lib.filters import filter_geo_tweets
 from lib.util import load_tweets, save_tweets
 
 # Dallas, TX, US
-# location = (-96.799738, 32.782893)
+# location = (32.782893, -96.799738)
 # distance = 150 # in km from location
 
 # New York, NY, US
-# location = (-73.963272, 40.785303)
+# location = (40.785303, -73.963272)
 # distance = 100
 
 # London, UK
-# location = (-0.124413, 51.510422)
+# location = (51.510422, -0.124413)
 # distance = 100
 
 # location: In the form of (lat, lon)
 # distance: in km from location
-location = (-0.124413, 51.510422)
+location = (51.510422, -0.124413)
 distance = 100
 
 language = 'en'
