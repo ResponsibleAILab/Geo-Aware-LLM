@@ -1,0 +1,3 @@
+{
+    "prompt,completion": "||OP||:%prompt%\n||REPLY||:"
+}
