@@ -4,8 +4,6 @@ import json
 from time import sleep
 from typing import List
 
-from lib.classes import Tweet
-
 def handle_errors(errors: List[dict]) -> List[int]:
     print('\n\nERRORS')
     not_found = 0
@@ -31,7 +29,7 @@ def handle_errors(errors: List[dict]) -> List[int]:
         print(f'{suspended} users were suspended')
     return [not_found, auth_errors, suspended]
 
-def ref_to_json(referenced_tweets: List[Tweet]) -> List[dict]:
+def ref_to_json(referenced_tweets: List[any] | None) -> List[dict]:
         ret_data = []
         if referenced_tweets == None:
             return []
@@ -42,7 +40,7 @@ def ref_to_json(referenced_tweets: List[Tweet]) -> List[dict]:
             })
         return ret_data
 
-def get_tweet_dict(api_tweet: dict) -> dict:
+def get_tweet_dict(api_tweet: tweepy.Tweet) -> dict:
     return {
         'id': api_tweet.id,
         'author_id': api_tweet.author_id,
@@ -70,7 +68,7 @@ def get_tweets(client: tweepy.Client, ids: List[int]) -> List[any]:
         ret_suspended_errors = suspended_errors
     return [res.data, ret_not_found, ret_auth_errors, ret_suspended_errors]
 
-def api_get_tweets_for_ids(ids: List[int]) -> List[dict]:
+def api_get_tweets_from_ids(ids: List[int]) -> List[dict]:
     if not os.path.exists('twitter_key.txt'):
         raise "Twitter bearer token file not found: twitter_key.txt, please create file and place bearer token inside it"
 
@@ -93,6 +91,8 @@ def api_get_tweets_for_ids(ids: List[int]) -> List[dict]:
             current_batch = []
         current_batch.append(id)
         idx += 1
+    if len(ids) % 100 != 0:
+        batches.append(current_batch)
 
     tweets = []
     bad_batches = []
